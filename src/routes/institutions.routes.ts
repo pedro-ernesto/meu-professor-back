@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import { InstitutionsRepository } from "../repositories/InstitutionsRepository";
+import { CreateInstitutionService } from "../services/CreateInstitutionService";
 
 const institutionsRoutes = Router();
 
@@ -9,13 +10,11 @@ const institutionRepository = new InstitutionsRepository();
 institutionsRoutes.post("/institutions", (request, response) => {
   const { name, abbreviation } = request.body;
 
-  const institutionAlreadyExists = institutionRepository.findByName(name);
+  const createInstitutionService = new CreateInstitutionService(
+    institutionRepository
+  );
 
-  if (institutionAlreadyExists) {
-    return response.status(400).json({ error: "já existe filho" });
-  }
-
-  institutionRepository.create({ name, abbreviation });
+  createInstitutionService.execute({ name, abbreviation });
 
   return response.status(201).send();
 });

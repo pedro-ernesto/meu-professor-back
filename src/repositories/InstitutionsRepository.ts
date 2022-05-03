@@ -1,18 +1,17 @@
 import { Institution } from "../models/Institution";
+import {
+  ICreateInstitutionDTO,
+  IInstitutionsRepository,
+} from "./IInstitutionsRepository";
 
-interface ICreateCategoryDTO {
-  name: string;
-  abbreviation: string;
-}
-
-class InstitutionsRepository {
+class InstitutionsRepository implements IInstitutionsRepository {
   private institutions: Institution[];
 
   constructor() {
     this.institutions = [];
   }
 
-  create({ name, abbreviation }: ICreateCategoryDTO): void {
+  create({ name, abbreviation }: ICreateInstitutionDTO): void {
     const institution = new Institution();
 
     Object.assign(institution, {
