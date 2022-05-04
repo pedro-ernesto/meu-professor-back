@@ -1,10 +1,10 @@
-import { ITagsTemplateRepository } from "../repositories/ITagsTemplateRepository";
+import { ITagsTemplateRepository } from "../../repositories/ITagsTemplateRepository";
 
 interface IRequest {
   name: string;
 }
 
-class CreateTagsTemplate {
+class CreateTagsTemplateUseCase {
   constructor(private tagsTemplateRepository: ITagsTemplateRepository) {}
 
   execute({ name }: IRequest) {
@@ -16,4 +16,4 @@ class CreateTagsTemplate {
   }
 }
 
-export { CreateTagsTemplate };
+export { CreateTagsTemplateUseCase };

@@ -1,14 +1,23 @@
-import { Institution } from "../models/Institution";
+/* eslint-disable no-use-before-define */
+import { Institution } from "../../models/Institution";
 import {
   ICreateInstitutionDTO,
   IInstitutionsRepository,
-} from "./IInstitutionsRepository";
+} from "../IInstitutionsRepository";
 
 class InstitutionsRepository implements IInstitutionsRepository {
   private institutions: Institution[];
+  private static INSTANCE: InstitutionsRepository;
 
-  constructor() {
+  private constructor() {
     this.institutions = [];
+  }
+
+  public static getInstance(): InstitutionsRepository {
+    if (!this.INSTANCE) {
+      this.INSTANCE = new InstitutionsRepository();
+    }
+    return this.INSTANCE;
   }
 
   create({ name, abbreviation }: ICreateInstitutionDTO): void {

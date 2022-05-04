@@ -1,14 +1,25 @@
-import { TagsTemplate } from "../models/TagsTemplate";
+/* eslint-disable no-use-before-define */
+import { TagsTemplate } from "../../models/TagsTemplate";
 import {
   ICreateTagsTemplateDTO,
   ITagsTemplateRepository,
-} from "./ITagsTemplateRepository";
+} from "../ITagsTemplateRepository";
+
+// SINGLETON PATTERN
 
 class TagsTemplateRepository implements ITagsTemplateRepository {
   private tagsTemplates: TagsTemplate[];
+  private static INSTANCE: TagsTemplateRepository;
 
-  constructor() {
+  private constructor() {
     this.tagsTemplates = [];
+  }
+
+  public static getInstance(): TagsTemplateRepository {
+    if (!this.INSTANCE) {
+      this.INSTANCE = new TagsTemplateRepository();
+    }
+    return this.INSTANCE;
   }
 
   create({ name }: ICreateTagsTemplateDTO): void {

@@ -1,11 +1,11 @@
-import { IInstitutionsRepository } from "../repositories/IInstitutionsRepository";
+import { IInstitutionsRepository } from "../../repositories/IInstitutionsRepository";
 
 interface IRequest {
   name: string;
   abbreviation: string;
 }
 
-class CreateInstitutionService {
+class CreateInstitutionUseCase {
   constructor(private institutionRepository: IInstitutionsRepository) {}
 
   execute({ name, abbreviation }: IRequest): void {
@@ -20,4 +20,4 @@ class CreateInstitutionService {
   }
 }
 
-export { CreateInstitutionService };
+export { CreateInstitutionUseCase };
