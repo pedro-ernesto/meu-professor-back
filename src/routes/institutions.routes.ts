@@ -1,13 +1,13 @@
 import { Router } from "express";
 
-import { InstitutionsRepository } from "../repositories/InstitutionsRepository";
-import { CreateInstitutionService } from "../services/CreateInstitutionService";
+import { InstitutionsRepository } from "../modules/institutions/repositories/InstitutionsRepository";
+import { CreateInstitutionService } from "../modules/institutions/services/CreateInstitutionService";
 
 const institutionsRoutes = Router();
 
 const institutionRepository = new InstitutionsRepository();
 
-institutionsRoutes.post("/institutions", (request, response) => {
+institutionsRoutes.post("/", (request, response) => {
   const { name, abbreviation } = request.body;
 
   const createInstitutionService = new CreateInstitutionService(
@@ -19,7 +19,7 @@ institutionsRoutes.post("/institutions", (request, response) => {
   return response.status(201).send();
 });
 
-institutionsRoutes.get("/institutions", (request, response) => {
+institutionsRoutes.get("/", (request, response) => {
   const all = institutionRepository.list();
 
   return response.status(201).json(all);
