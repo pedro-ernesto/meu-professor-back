@@ -1,7 +1,7 @@
 import { Router } from "express";
 import multer from "multer";
 
-import { createInstitutionController } from "../modules/institutions/useCases/createInstitution";
+import createInstitutionController from "../modules/institutions/useCases/createInstitution";
 import { importInstitutionController } from "../modules/institutions/useCases/importInstitution";
 import { listInstitutionController } from "../modules/institutions/useCases/listInstitution";
 
@@ -22,8 +22,9 @@ institutionsRoutes.post(
 );
 
 // ROTA MULTER DE UPLOAD DE ARQUIVOS
+
 institutionsRoutes.post("/", (request, response) => {
-  return createInstitutionController.handle(request, response);
+  return createInstitutionController().handle(request, response);
 });
 
 institutionsRoutes.get("/", (request, response) => {

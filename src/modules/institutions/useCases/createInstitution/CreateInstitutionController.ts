@@ -3,12 +3,12 @@ import { Response, Request } from "express";
 import { CreateInstitutionUseCase } from "./CreateInstitutionUseCase";
 
 class CreateInstitutionController {
-  constructor(private createTagsTemplateUseCase: CreateInstitutionUseCase) {}
+  constructor(private createInstitutionUseCase: CreateInstitutionUseCase) {}
 
-  handle(request: Request, response: Response): Response {
+  async handle(request: Request, response: Response): Promise<Response> {
     const { name, abbreviation } = request.body;
 
-    this.createTagsTemplateUseCase.execute({ name, abbreviation });
+    await this.createInstitutionUseCase.execute({ name, abbreviation });
 
     return response.status(201).send();
   }

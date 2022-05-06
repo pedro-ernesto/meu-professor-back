@@ -2,12 +2,16 @@ import { InstitutionsRepository } from "../../repositories/implementations/Insti
 import { CreateInstitutionController } from "./CreateInstitutionController";
 import { CreateInstitutionUseCase } from "./CreateInstitutionUseCase";
 
-const institutionRepository = InstitutionsRepository.getInstance();
-const createInstitutionUseCase = new CreateInstitutionUseCase(
-  institutionRepository
-);
-const createInstitutionController = new CreateInstitutionController(
-  createInstitutionUseCase
-);
+export default (): CreateInstitutionController => {
+  const institutionRepository = new InstitutionsRepository();
 
-export { createInstitutionController };
+  const createInstitutionUseCase = new CreateInstitutionUseCase(
+    institutionRepository
+  );
+
+  const createInstitutionController = new CreateInstitutionController(
+    createInstitutionUseCase
+  );
+
+  return createInstitutionController;
+};

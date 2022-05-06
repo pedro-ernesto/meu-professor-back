@@ -1,46 +1,35 @@
 /* eslint-disable no-use-before-define */
-import { Institution } from "../../models/Institution";
+import { getRepository, Repository } from "typeorm";
+
+import { Institution } from "../../entities/Institution";
 import {
   ICreateInstitutionDTO,
   IInstitutionsRepository,
 } from "../IInstitutionsRepository";
 
 class InstitutionsRepository implements IInstitutionsRepository {
-  private institutions: Institution[];
-  private static INSTANCE: InstitutionsRepository;
+  private repository: Repository<Institution>;
 
-  private constructor() {
-    this.institutions = [];
+  constructor() {
+    this.repository = getRepository(Institution);
   }
 
-  public static getInstance(): InstitutionsRepository {
-    if (!this.INSTANCE) {
-      this.INSTANCE = new InstitutionsRepository();
-    }
-    return this.INSTANCE;
-  }
-
-  create({ name, abbreviation }: ICreateInstitutionDTO): void {
-    const institution = new Institution();
-
-    Object.assign(institution, {
+  async create({ name, abbreviation }: ICreateInstitutionDTO): Promise<void> {
+    const institution = this.repository.create({
       name,
       abbreviation,
-      created_at: new Date(),
-      update_at: new Date(),
     });
 
-    this.institutions.push(institution);
+    await this.repository.save(institution);
   }
 
-  list(): Institution[] {
-    return this.institutions;
+  async list(): Promise<Institution[]> {
+    const institutions = await this.repository.find();
+    return institutions;
   }
 
-  findByName(name: string): Institution {
-    const institution = this.institutions.find(
-      (institution) => institution.name === name
-    );
+  async findByName(name: string): Promise<Institution> {
+    const institution = await this.repository.findOne({ name });
     return institution;
   }
 }

@@ -2,7 +2,7 @@ import { InstitutionsRepository } from "../../repositories/implementations/Insti
 import { ListInstitutionController } from "./ListInstitutionController";
 import { ListInstitutionUseCase } from "./ListInstitutionUseCase";
 
-const institutionRepository = InstitutionsRepository.getInstance();
+const institutionRepository = null;
 const listInstitutionUseCase = new ListInstitutionUseCase(
   institutionRepository
 );

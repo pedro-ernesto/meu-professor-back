@@ -1,4 +1,4 @@
-import { Institution } from "../models/Institution";
+import { Institution } from "../entities/Institution";
 
 interface ICreateInstitutionDTO {
   name: string;
@@ -6,9 +6,9 @@ interface ICreateInstitutionDTO {
 }
 
 interface IInstitutionsRepository {
-  findByName(name: string): Institution;
-  list(): Institution[];
-  create({ name, abbreviation }: ICreateInstitutionDTO): void;
+  findByName(name: string): Promise<Institution>;
+  list(): Promise<Institution[]>;
+  create({ name, abbreviation }: ICreateInstitutionDTO): Promise<void>;
 }
 
 export { ICreateInstitutionDTO, IInstitutionsRepository };

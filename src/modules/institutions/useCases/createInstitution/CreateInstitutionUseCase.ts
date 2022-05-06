@@ -8,9 +8,9 @@ interface IRequest {
 class CreateInstitutionUseCase {
   constructor(private institutionRepository: IInstitutionsRepository) {}
 
-  execute({ name, abbreviation }: IRequest): void {
+  async execute({ name, abbreviation }: IRequest): Promise<void> {
     const institutionAlreadyExists =
-      this.institutionRepository.findByName(name);
+      await this.institutionRepository.findByName(name);
 
     if (institutionAlreadyExists) {
       throw new Error("Institution already exists");

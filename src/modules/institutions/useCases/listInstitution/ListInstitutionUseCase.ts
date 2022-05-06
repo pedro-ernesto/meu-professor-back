@@ -1,10 +1,10 @@
-import { Institution } from "../../models/Institution";
+import { Institution } from "../../entities/Institution";
 import { IInstitutionsRepository } from "../../repositories/IInstitutionsRepository";
 
 class ListInstitutionUseCase {
   constructor(private institutionRepository: IInstitutionsRepository) {}
 
-  execute(): Institution[] {
+  async execute(): Promise<Institution[]> {
     const listInstitutions = this.institutionRepository.list();
     return listInstitutions;
   }

@@ -1,4 +1,4 @@
-import { TagsTemplate } from "../../models/TagsTemplate";
+import { TagsTemplate } from "../../entities/TagsTemplate";
 import { ITagsTemplateRepository } from "../../repositories/ITagsTemplateRepository";
 
 class ListTagsTemplateUseCase {

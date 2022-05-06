@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import { TagsTemplate } from "../../models/TagsTemplate";
+import { TagsTemplate } from "../../entities/TagsTemplate";
 import {
   ICreateTagsTemplateDTO,
   ITagsTemplateRepository,
