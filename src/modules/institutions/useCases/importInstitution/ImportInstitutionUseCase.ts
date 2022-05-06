@@ -29,6 +29,7 @@ class ImportInstitutionUseCase {
           });
         })
         .on("end", () => {
+          fs.promises.unlink(file.path);
           resolve(institutions);
         })
         .on("error", (err) => {
