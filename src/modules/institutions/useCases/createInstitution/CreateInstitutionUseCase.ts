@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
+import { AppError } from "../../../../errors/AppError";
 import { IInstitutionsRepository } from "../../repositories/IInstitutionsRepository";
 
 interface IRequest {
@@ -19,7 +20,7 @@ class CreateInstitutionUseCase {
       await this.institutionRepository.findByName(name);
 
     if (institutionAlreadyExists) {
-      throw new Error("Institution already exists");
+      throw new AppError("Institution already exists");
     }
 
     this.institutionRepository.create({ name, abbreviation });

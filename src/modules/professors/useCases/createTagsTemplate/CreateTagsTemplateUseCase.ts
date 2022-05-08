@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
+import { AppError } from "../../../../errors/AppError";
 import { ITagsTemplateRepository } from "../../repositories/ITagsTemplateRepository";
 
 interface IRequest {
@@ -18,7 +19,7 @@ class CreateTagsTemplateUseCase {
       name,
     });
     if (tagsTemplateExists) {
-      throw new Error("Tag already exists");
+      throw new AppError("Tag already exists");
     }
     await this.tagsTemplateRepository.create({ name });
   }
