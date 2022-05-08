@@ -1,14 +1,17 @@
 import { Response, Request } from "express";
+import { container } from "tsyringe";
 
 import { CreateTagsTemplateUseCase } from "./CreateTagsTemplateUseCase";
 
 class CreateTagsTemplateController {
-  constructor(private createTagsTemplateUseCase: CreateTagsTemplateUseCase) {}
-
-  handle(request: Request, response: Response): Response {
+  async handle(request: Request, response: Response): Promise<Response> {
     const { name } = request.body;
 
-    this.createTagsTemplateUseCase.execute({ name });
+    const createTagsTemplateUseCase = container.resolve(
+      CreateTagsTemplateUseCase
+    );
+
+    await createTagsTemplateUseCase.execute({ name });
 
     return response.status(201).send();
   }

@@ -1,18 +1,26 @@
+import { inject, injectable } from "tsyringe";
+
 import { ITagsTemplateRepository } from "../../repositories/ITagsTemplateRepository";
 
 interface IRequest {
   name: string;
 }
 
+@injectable()
 class CreateTagsTemplateUseCase {
-  constructor(private tagsTemplateRepository: ITagsTemplateRepository) {}
+  constructor(
+    @inject("TagsTemplateRepository")
+    private tagsTemplateRepository: ITagsTemplateRepository
+  ) {}
 
-  execute({ name }: IRequest) {
-    const tagsTemplateExists = this.tagsTemplateRepository.findByName({ name });
+  async execute({ name }: IRequest): Promise<void> {
+    const tagsTemplateExists = await this.tagsTemplateRepository.findByName({
+      name,
+    });
     if (tagsTemplateExists) {
       throw new Error("Tag already exists");
     }
-    this.tagsTemplateRepository.create({ name });
+    await this.tagsTemplateRepository.create({ name });
   }
 }
 

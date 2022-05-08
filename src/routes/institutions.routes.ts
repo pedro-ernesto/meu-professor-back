@@ -1,9 +1,9 @@
 import { Router } from "express";
 import multer from "multer";
 
-import createInstitutionController from "../modules/institutions/useCases/createInstitution";
-import { importInstitutionController } from "../modules/institutions/useCases/importInstitution";
-import { listInstitutionController } from "../modules/institutions/useCases/listInstitution";
+import { CreateInstitutionController } from "../modules/institutions/useCases/createInstitution/CreateInstitutionController";
+import { ImportInstitutionController } from "../modules/institutions/useCases/importInstitution/ImportInstitutionController";
+import { ListInstitutionController } from "../modules/institutions/useCases/listInstitution/ListInstitutionController";
 
 const institutionsRoutes = Router();
 
@@ -13,22 +13,22 @@ const upload = multer({
   dest: "./tmp",
 });
 
+const importInstitutionController = new ImportInstitutionController();
+
 institutionsRoutes.post(
   "/import",
   upload.single("file"),
-  (request, response) => {
-    return importInstitutionController.handle(request, response);
-  }
+  importInstitutionController.handle
 );
 
 // ROTA MULTER DE UPLOAD DE ARQUIVOS
 
-institutionsRoutes.post("/", (request, response) => {
-  return createInstitutionController().handle(request, response);
-});
+const createInstitutionController = new CreateInstitutionController();
 
-institutionsRoutes.get("/", (request, response) => {
-  return listInstitutionController.handle(request, response);
-});
+institutionsRoutes.post("/", createInstitutionController.handle);
+
+const listInstitutionController = new ListInstitutionController();
+
+institutionsRoutes.get("/", listInstitutionController.handle);
 
 export { institutionsRoutes };

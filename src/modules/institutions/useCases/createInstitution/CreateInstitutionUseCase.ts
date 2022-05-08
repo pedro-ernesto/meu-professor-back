@@ -1,3 +1,5 @@
+import { inject, injectable } from "tsyringe";
+
 import { IInstitutionsRepository } from "../../repositories/IInstitutionsRepository";
 
 interface IRequest {
@@ -5,8 +7,12 @@ interface IRequest {
   abbreviation: string;
 }
 
+@injectable()
 class CreateInstitutionUseCase {
-  constructor(private institutionRepository: IInstitutionsRepository) {}
+  constructor(
+    @inject("InstitutionsRepository")
+    private institutionRepository: IInstitutionsRepository
+  ) {}
 
   async execute({ name, abbreviation }: IRequest): Promise<void> {
     const institutionAlreadyExists =

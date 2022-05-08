@@ -1,5 +1,6 @@
 import { parse as csvParse } from "csv-parse";
 import fs from "fs";
+import { inject, injectable } from "tsyringe";
 
 import { IInstitutionsRepository } from "../../repositories/IInstitutionsRepository";
 
@@ -8,8 +9,12 @@ interface IImportInstitution {
   abbreviation: string;
 }
 
+@injectable()
 class ImportInstitutionUseCase {
-  constructor(private institutionsRepository: IInstitutionsRepository) {}
+  constructor(
+    @inject("InstitutionsRepository")
+    private institutionsRepository: IInstitutionsRepository
+  ) {}
 
   loadInstitutions(file: Express.Multer.File): Promise<IImportInstitution[]> {
     return new Promise((resolve, reject) => {
@@ -43,10 +48,12 @@ class ImportInstitutionUseCase {
     institutions.map(async (institution) => {
       const { name, abbreviation } = institution;
 
-      const institutionExists = this.institutionsRepository.findByName(name);
+      const institutionExists = await this.institutionsRepository.findByName(
+        name
+      );
 
       if (!institutionExists) {
-        this.institutionsRepository.create({
+        await this.institutionsRepository.create({
           name,
           abbreviation,
         });

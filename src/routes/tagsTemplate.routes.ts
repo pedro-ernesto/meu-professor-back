@@ -1,16 +1,16 @@
 import { Router } from "express";
 
-import { createTagsTemplateController } from "../modules/professors/useCases/createTagsTemplate";
-import { listTagsTemplateController } from "../modules/professors/useCases/listTagsTemplate";
+import { CreateTagsTemplateController } from "../modules/professors/useCases/createTagsTemplate/CreateTagsTemplateController";
+import { ListTagsTemplateController } from "../modules/professors/useCases/listTagsTemplate/ListTagsTemplateController";
 
 const tagsTemplateRoutes = Router();
 
-tagsTemplateRoutes.post("/template", (request, response) => {
-  return createTagsTemplateController.handle(request, response);
-});
+const createTagsTemplateController = new CreateTagsTemplateController();
 
-tagsTemplateRoutes.get("/template", (request, response) => {
-  return listTagsTemplateController.handle(request, response);
-});
+tagsTemplateRoutes.post("/template", createTagsTemplateController.handle);
+
+const listTagsTemplateController = new ListTagsTemplateController();
+
+tagsTemplateRoutes.get("/template", listTagsTemplateController.handle);
 
 export { tagsTemplateRoutes };

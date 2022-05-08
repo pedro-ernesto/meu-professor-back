@@ -1,4 +1,6 @@
 /* eslint-disable no-use-before-define */
+import { getRepository, Repository } from "typeorm";
+
 import { TagsTemplate } from "../../entities/TagsTemplate";
 import {
   ICreateTagsTemplateDTO,
@@ -8,40 +10,28 @@ import {
 // SINGLETON PATTERN
 
 class TagsTemplateRepository implements ITagsTemplateRepository {
-  private tagsTemplates: TagsTemplate[];
-  private static INSTANCE: TagsTemplateRepository;
+  private repository: Repository<TagsTemplate>;
 
-  private constructor() {
-    this.tagsTemplates = [];
+  constructor() {
+    this.repository = getRepository(TagsTemplate);
   }
 
-  public static getInstance(): TagsTemplateRepository {
-    if (!this.INSTANCE) {
-      this.INSTANCE = new TagsTemplateRepository();
-    }
-    return this.INSTANCE;
-  }
-
-  create({ name }: ICreateTagsTemplateDTO): void {
-    const tagsTemplate = new TagsTemplate();
-
-    Object.assign(tagsTemplate, {
+  async create({ name }: ICreateTagsTemplateDTO): Promise<void> {
+    const tagsTemplate = this.repository.create({
       name,
-      created_at: new Date(),
     });
 
-    this.tagsTemplates.push(tagsTemplate);
+    await this.repository.save(tagsTemplate);
   }
 
-  findByName({ name }: ICreateTagsTemplateDTO): TagsTemplate {
-    const tagsTemplate = this.tagsTemplates.find(
-      (tagsTemplate) => tagsTemplate.name === name
-    );
+  async findByName({ name }: ICreateTagsTemplateDTO): Promise<TagsTemplate> {
+    const tagsTemplate = await this.repository.findOne({ name });
     return tagsTemplate;
   }
 
-  list(): TagsTemplate[] {
-    return this.tagsTemplates;
+  async list(): Promise<TagsTemplate[]> {
+    const allTags = this.repository.find();
+    return allTags;
   }
 }
 

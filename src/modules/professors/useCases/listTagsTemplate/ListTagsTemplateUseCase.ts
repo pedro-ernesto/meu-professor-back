@@ -1,11 +1,17 @@
+import { inject, injectable } from "tsyringe";
+
 import { TagsTemplate } from "../../entities/TagsTemplate";
 import { ITagsTemplateRepository } from "../../repositories/ITagsTemplateRepository";
 
+@injectable()
 class ListTagsTemplateUseCase {
-  constructor(private tagsTemplateRepository: ITagsTemplateRepository) {}
+  constructor(
+    @inject("TagsTemplateRepository")
+    private tagsTemplateRepository: ITagsTemplateRepository
+  ) {}
 
-  execute(): TagsTemplate[] {
-    const listTagsTemplate = this.tagsTemplateRepository.list();
+  async execute(): Promise<TagsTemplate[]> {
+    const listTagsTemplate = await this.tagsTemplateRepository.list();
     return listTagsTemplate;
   }
 }
