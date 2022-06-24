@@ -7,8 +7,6 @@ import {
   ITagsTemplateRepository,
 } from "../ITagsTemplateRepository";
 
-// SINGLETON PATTERN
-
 class TagsTemplateRepository implements ITagsTemplateRepository {
   private repository: Repository<TagsTemplate>;
 
