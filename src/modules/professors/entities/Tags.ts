@@ -9,7 +9,6 @@ import {
 import { v4 as uuidV4 } from "uuid";
 
 import { Professor } from "./Professor";
-import { TagsTemplate } from "./TagsTemplate";
 
 @Entity("tags")
 class Tags {
@@ -24,11 +23,7 @@ class Tags {
   professor: Professor;
 
   @Column()
-  tags_template_id: string;
-
-  @ManyToOne(() => TagsTemplate)
-  @JoinColumn({ name: "tags_template_id" })
-  tags_template: TagsTemplate;
+  name: string;
 
   @CreateDateColumn()
   created_at: Date;
