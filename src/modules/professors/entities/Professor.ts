@@ -8,8 +8,8 @@ import {
 } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
 
+import { Department } from "../../institutions/entities/Department";
 import { Institution } from "../../institutions/entities/Institution";
-import { Department } from "./Department";
 import { Subject } from "./Subject";
 
 @Entity("professors")

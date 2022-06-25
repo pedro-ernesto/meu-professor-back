@@ -8,7 +8,7 @@ import {
 } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
 
-import { Institution } from "../../institutions/entities/Institution";
+import { Institution } from "./Institution";
 
 @Entity("departments")
 class Department {
