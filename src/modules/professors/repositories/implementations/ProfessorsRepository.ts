@@ -36,8 +36,10 @@ class ProfessorsRepository implements IProfessorsRepository {
   }
 
   async list(): Promise<Professor[]> {
-    const professor = this.repository.find();
-    return professor;
+    const professors = this.repository.find({
+      relations: ["subject", "department", "institution"],
+    });
+    return professors;
   }
 
   async findByInstitutionId({
